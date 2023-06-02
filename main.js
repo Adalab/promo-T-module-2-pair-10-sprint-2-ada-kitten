@@ -67,9 +67,22 @@ function renderRace (event) {
         list.innerHTML = "Uy que despiste, no sabemos su raza";
     }else {
         filterKitten(event);
+
     }
 }
 buttonSearch.addEventListener('click', renderRace);*/
+
+function addNewKitten(ev) {
+  ev.preventDefault();
+  console.log('¡Uy! parece que has olvidado algo');
+
+  if (valueDesc === '' || valuePhoto === '' || valueName === '') {
+    labelMessageError.innerHTML = '¡Uy! parece que has olvidado algo';
+  } else {
+    labelMessageError.innerHTML = '';
+  }
+}
+btnForm.addEventListener('click', addNewKitten);
 const spanAdd = document.querySelector('.new');
 function handleClickNewCatForm(event) {
     event.preventDefault(); 
