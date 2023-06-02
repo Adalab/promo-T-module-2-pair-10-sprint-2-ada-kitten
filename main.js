@@ -42,47 +42,25 @@ const elementThree =`
     <p class="card_description">${kittenDataList[2].desc}</p>
 </li>`;
 list.innerHTML = elementOne + elementTwo + elementThree;
+const input_search_race = document.querySelector('.js_in_search_race'); 
+const input_search_desc = document.querySelector('.js_in_search_desc');
+const buttonSearch = document.querySelector('.js-button-search');
 function filterKitten (event) { 
     const descrSearchText = input_search_desc.value;
     const raceSearchText = input_search_race.value; 
     event.preventDefault();
     list.innerHTML="";
-    if( kittenDataList[0].desc.includes(descrSearchText) && kittenDataList[0].race.includes(raceSearchText)){
-        list.innerHTML += elementOne
+    if( kittenDataList[0].desc.includes(descrSearchText) || kittenDataList[0].race === raceSearchText){
+        list.innerHTML += elementOne;
     }   
-    if( kittenDataList[1].desc.includes(descrSearchText) && kittenDataList[1].race.includes(raceSearchText)){
-            list.innerHTML += elementTwo
+    if( kittenDataList[1].desc.includes(descrSearchText) || kittenDataList[1].race === raceSearchText){
+        list.innerHTML += elementTwo;
     }   
-    if( kittenDataList[2].desc.includes(descrSearchText) && kittenDataList[2].race.includes(raceSearchText)){
-            list.innerHTML += elementThree
+    if( kittenDataList[2].desc.includes(descrSearchText) || kittenDataList[2].race === raceSearchText){
+        list.innerHTML += elementThree;
     }
 }
-/*const input_search_race = document.querySelector('.js_in_search_race'); 
-const input_search_desc = document.querySelector('.js_in_search_desc');
-const buttonSearch = document.querySelector('.js-button-search');
-function renderRace (event) {
-    event.preventDefault();
-    const raceSearchText = input_search_race.value;
-    if (raceSearchText===''){
-        list.innerHTML = "Uy que despiste, no sabemos su raza";
-    }else {
-        filterKitten(event);
-
-    }
-}
-buttonSearch.addEventListener('click', renderRace);*/
-
-function addNewKitten(ev) {
-  ev.preventDefault();
-  console.log('¡Uy! parece que has olvidado algo');
-
-  if (valueDesc === '' || valuePhoto === '' || valueName === '') {
-    labelMessageError.innerHTML = '¡Uy! parece que has olvidado algo';
-  } else {
-    labelMessageError.innerHTML = '';
-  }
-}
-btnForm.addEventListener('click', addNewKitten);
+buttonSearch.addEventListener('click', filterKitten);
 const spanAdd = document.querySelector('.new');
 function handleClickNewCatForm(event) {
     event.preventDefault(); 
