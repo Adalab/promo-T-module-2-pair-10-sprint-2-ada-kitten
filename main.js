@@ -51,15 +51,19 @@ function filterKitten (event) {
     const raceSearchText = input_search_race.value; 
     event.preventDefault();
     list.innerHTML="";
-    if( kittenDataList[0].desc.includes(descrSearchText) || kittenDataList[0].race === raceSearchText){
-        list.innerHTML += elementOne;
-    }   
-    if( kittenDataList[1].desc.includes(descrSearchText) || kittenDataList[1].race === raceSearchText){
-        list.innerHTML += elementTwo;
-    }   
-    if( kittenDataList[2].desc.includes(descrSearchText) || kittenDataList[2].race === raceSearchText){
-        list.innerHTML += elementThree;
-    }
+    const filterDescKitten =  kittenDataList.filter((kitten)=>kitten.desc.includes(descrSearchText));
+    filterDescKitten.map((kitten)=>{
+        renderKitten(kitten)
+    })
+    const filterRaceKitten = kittenDataList.filter((kitten) =>
+      kitten.race.includes(raceSearchText)
+    );
+    filterRaceKitten.map((kitten) => {
+      renderKitten(kitten);
+    });
+
+
+
 }
 buttonSearch.addEventListener('click', filterKitten);
 const spanAdd = document.querySelector('.new');
@@ -86,24 +90,46 @@ const inputName = document.querySelector('.js-input-name');
 const labelMessageError = document.querySelector('.js-label-error');
 const button_add = document.querySelector(".js-btn-add");
 const inputRace = document.querySelector('.js-input-race');
+
+
+
 function addNewKitten(event) {
-    const valueDesc = inputDesc.value;
-    const valuePhoto = inputPhoto.value;
-    const valueName = inputName.value;
-    const valueRace = inputRace.value; 
+    event.preventDefault()
+    let valueDesc = inputDesc.value;
+    let valuePhoto = inputPhoto.value;
+    let valueName = inputName.value;
+    let valueRace = inputRace.value; 
     if (valueDesc === '' || valuePhoto === '' || valueName === '') {
         labelMessageError.innerHTML = '¡Uy! parece que has olvidado algo.';
     }
     else {
-        list.innerHTML(` 
-        <li class="card one">
-        <article>
-            <img class="card_img" src= ${valuePhoto} alt="siames-cat"/>
-            <h3 class="card_title"> ${valueName}</h3>
-            <h4 class="card_race"> ${valueRace}</h4>
-            <p class="card_description"> ${valueDesc}</p>
-        </article>
-    </li>`)
+        const newkittenDataObject = { image: valuePhoto, name: valueName, desc: valueDesc, race: valueRace };
+        kittenDataList.push(newkittenDataObject)
+        labelMessageError.innerHTML = 'Mola!Un nuevo gatito en Adalab!';
+        inputDesc.value = '';
+        inputPhoto.value = '';
+        inputName.value = '';
+        inputRace.value = ''; 
+        renderKitten(newkittenDataObject)
   }
 }
 button_add.addEventListener('click', addNewKitten);
+
+function renderKitten (kittenData) {
+    kittenData = `<li class="card">
+            <article>
+              <img
+                class="card_img"
+                src= ${kittenData.image}
+                alt="siames-cat"
+              />
+              <h3 class="card_title">${kittenData.name.toUpperCase()}</h3>
+              <h4 class="card_race">${kittenData.race}</h4>
+              <p class="card_description">
+                ${kittenData.desc}
+              </p>
+            </article>
+          </li>`;
+          
+          list.innerHTML +=  kittenData 
+}
