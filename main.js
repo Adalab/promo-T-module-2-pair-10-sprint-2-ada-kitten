@@ -30,7 +30,8 @@ const elementOne = `
     </article>
 </li>`;
 const elementTwo = `
-<li class="card two"><img class="card_img" src=${kittenDataList[1].image} alt="sphynx-cat"/>
+<li class="card two">
+    <img class="card_img" src=${kittenDataList[1].image} alt="sphynx-cat"/>
     <h3 class="card_title">${kittenDataList[1].name}</h3>
     <h4 class="card_race">${kittenDataList[1].race}</h4>
     <p class="card_description">${kittenDataList[1].desc}</p>
