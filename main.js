@@ -1,7 +1,7 @@
 'use strict'
 const list = document.querySelector(".js-list");
-const kittenDataList = [
-    {
+let kittenDataList = [];
+   /* {
         image: 'https://dev.adalab.es/gato-siames.webp',
         name: 'Anastacio',
         desc: ' Porte elegante, su patrón de color tan característico y sus ojos de un azul intenso, pero su historia se remonta a Asía al menos hace 500 años, donde tuvo su origen muy posiblemente.',
@@ -42,7 +42,7 @@ const elementThree =`
     <h4 class="card_race">${kittenDataList[2].race}</h4>
     <p class="card_description">${kittenDataList[2].desc}</p>
 </li>`;
-list.innerHTML = elementOne + elementTwo + elementThree;
+list.innerHTML = elementOne + elementTwo + elementThree;*/
 const input_search_race = document.querySelector('.js_in_search_race'); 
 const input_search_desc = document.querySelector('.js_in_search_desc');
 const buttonSearch = document.querySelector('.js-button-search');
@@ -50,20 +50,25 @@ function filterKitten (event) {
     const descrSearchText = input_search_desc.value;
     const raceSearchText = input_search_race.value; 
     event.preventDefault();
-    list.innerHTML="";
-    const filterDescKitten =  kittenDataList.filter((kitten)=>kitten.desc.includes(descrSearchText));
-    filterDescKitten.map((kitten)=>{
+    list.innerHTML=" ";
+    if (descrSearchText==='' && raceSearchText===''){
+        list.innerHTML= 'Rellena algún campo';
+    } else if (descrSearchText !=='' && raceSearchText !==''){
+        const descracefilter =  kittenDataList.filter((kitten)=> kitten.desc.includes(descrSearchText) || kitten.race.includes(raceSearchText));
+        descracefilter.map((kitten) => {
+            renderKitten(kitten);
+        });   
+    }else if (raceSearchText !==''){
+        const filterRaceKitten = kittenDataList.filter((kitten) =>kitten.race.includes(raceSearchText));
+        filterRaceKitten.map((kitten) => {
+        renderKitten(kitten);
+        });
+    }else if (descrSearchText!==''){
+        const filterDescKitten =  kittenDataList.filter((kitten)=>kitten.desc.includes(descrSearchText));
+        filterDescKitten.map((kitten)=>{
         renderKitten(kitten)
-    })
-    const filterRaceKitten = kittenDataList.filter((kitten) =>
-      kitten.race.includes(raceSearchText)
-    );
-    filterRaceKitten.map((kitten) => {
-      renderKitten(kitten);
-    });
-
-
-
+        })
+    }
 }
 buttonSearch.addEventListener('click', filterKitten);
 const spanAdd = document.querySelector('.new');
@@ -132,4 +137,13 @@ function renderKitten (kittenData) {
           </li>`;
           
           list.innerHTML +=  kittenData 
+}
+const GITHUB_USER = 'AndreaFerreiro';
+const SERVER_URL = `https://dev.adalab.es/api/kittens/${GITHUB_USER}`;
+fetch (`${SERVER_URL}`)
+.then((response) => response.json())
+.then ((data)  => (kittenDataList= data));
+console.log(kittenDataList);
+for (let i=0; i< kittenDataList.length; i++){
+    renderKitten(kittenDataList[i]);
 }
