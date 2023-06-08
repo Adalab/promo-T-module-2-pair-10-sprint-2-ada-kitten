@@ -112,25 +112,30 @@ function addNewKitten(event) {
 }
 function renderKitten(kittenData) {
     const article = document.createElement('article');
-    const liElement = document.createElement('li').appendChild(article);
+    const liElement = document.createElement('li');
     const newContentH3 = document.createTextNode(`${kittenData.name.toUpperCase()}`);
     const newContentH4 = document.createTextNode(`${kittenData.race}`);
     const newContentP = document.createTextNode(`${kittenData.desc}`);
     const img = document.createElement('img');
-    const h3 = document.createElement('h3').appendChild(newContentH3);
-    const h4 = document.createElement('h4').appendChild(newContentH4);
-    const paragraph = document.createElement('p').appendChild(newContentP);
+    const h3 = document.createElement('h3');
+    const h4 = document.createElement('h4');
+    const paragraph = document.createElement('p');
     liElement.classList.add('card');
+    liElement.appendChild(article);
     img.classList.add ('card_img');
     img.src = `${kittenData.image}`;
     img.alt = "siames-cat";
     h3.classList.add('card_title');
+    h3.appendChild(newContentH3);
     h4.classList.add('card_race');
+    h4.appendChild(newContentH4);
+    h4.appendChild(newContentP);
     paragraph.classList.add('card_description');
     article.appendChild(img);
     article.appendChild(h3);
     article.appendChild(h4);
     article.appendChild(paragraph);
+    list.appendChild(liElement);
 }
 function initialListKitten() {
     if (kittenListStored) {
