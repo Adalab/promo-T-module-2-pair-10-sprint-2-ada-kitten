@@ -110,26 +110,28 @@ function addNewKitten(event) {
 
   }
 }
-
 function renderKitten(kittenData) {
-    kittenData = `<li class="card">
-    <article>
-    <img
-    class="card_img"
-    src= ${kittenData.image}
-    alt="siames-cat"
-    />
-    <h3 class="card_title">${kittenData.name.toUpperCase()}</h3>
-    <h4 class="card_race">${kittenData.race}</h4>
-    <p class="card_description">
-    ${kittenData.desc}
-    </p>
-    </article>
-    </li>`;
-    
-    list.innerHTML += kittenData;
+    const article = document.createElement('article');
+    const liElement = document.createElement('li').appendChild(article);
+    const newContentH3 = document.createTextNode(`${kittenData.name.toUpperCase()}`);
+    const newContentH4 = document.createTextNode(`${kittenData.race}`);
+    const newContentP = document.createTextNode(`${kittenData.desc}`);
+    const img = document.createElement('img');
+    const h3 = document.createElement('h3').appendChild(newContentH3);
+    const h4 = document.createElement('h4').appendChild(newContentH4);
+    const paragraph = document.createElement('p').appendChild(newContentP);
+    liElement.classList.add('card');
+    img.classList.add ('card_img');
+    img.src = `${kittenData.image}`;
+    img.alt = "siames-cat";
+    h3.classList.add('card_title');
+    h4.classList.add('card_race');
+    paragraph.classList.add('card_description');
+    article.appendChild(img);
+    article.appendChild(h3);
+    article.appendChild(h4);
+    article.appendChild(paragraph);
 }
-
 function initialListKitten() {
     if (kittenListStored) {
         for (let i = 0; i < kittenListStored.length; i++) {
@@ -147,11 +149,7 @@ function initialListKitten() {
         });
     }
 }
-
-
 initialListKitten()
-
-
 button_add.addEventListener('click', addNewKitten);
 buttonCancel.addEventListener('click', handleButtonCancel);
 buttonSearch.addEventListener('click', filterKitten);
